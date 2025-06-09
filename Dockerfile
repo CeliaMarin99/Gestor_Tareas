@@ -16,5 +16,11 @@ WORKDIR /app
 COPY --from=builder /app/target/*.jar app.jar
 # Expose the port the app will run on
 EXPOSE 8080
+
+ENV DATABASE_URL jdbc:mysql://mysqldb:3306/gestor_tareas
+ENV DATABASE_USERNAME root
+ENV DATABASE_PASSWORD ""
+ENV DATABASE_DRIVER com.mysql.cj.jdbc.Driver
 # Command to run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
