@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Nueva Tarea</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+	<!-- Navbar -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Gestor de Tareas</a>
+			<div class="d-flex">
+				<a class="btn btn-success me-2" href="/">Volver al inicio</a>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Contenido principal -->
+	<div class="container text-center">
+
+		<div>
+			<h1>Editar tarea</h1>
+			<form th:action="@{/guardar}" th:object="${tarea}" method="post" style="max-width: 600px;margin:0 auto;">
+				<div class="m-3">
+					<div class="form-group row mb-3">
+						<label class="col-form-label col-sm-4">ID tarea:</label>
+						<div class="col-sm-8">
+							<input type="text" name="id" th:field="*{id}" class="form-control" readonly="readonly">
+						</div>
+					</div>
+					<div class="form-group row mb-3">
+						<label class="col-form-label col-sm-4">Usuario:</label>
+						<div class="col-sm-8">
+							<select th:field="*{prioridad}" class="form-control" required>
+								<option value="">Seleccionar</option>
+								<option value="Alta">Alta</option>
+								<option value="Media">Media</option>
+								<option value="Baja">Baja</option>
+							</select>
+							<div th:if="${#fields.hasErrors('prioridad')}" th:errors="*{prioridad}" class="text-danger small"></div>
+						</div>
+					</div>
+					<div class="form-group row mb-3">
+						<label class="col-form-label col-sm-4">Descripcion:</label>
+						<div class="col-sm-8">
+							<textarea th:field="*{descripcion}" class="form-control" rows="3"></textarea>
+							<div th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}" class="text-danger small"></div>
+						</div>
+					</div>
+					<div class="form-group row mb-3">
+						<label class="col-form-label col-sm-4">Usuario:</label>	
+						<div class="col-sm-8">
+							<select th:field="*{usuario}" class="form-control" required>
+								<option value="">Seleccionar</option>
+								<th:block th:each="usuario : ${listaUsuarios}">
+									<option th:text="${usuario.nombre}" th:value="${usuario.nombre}"></option>
+								</th:block>
+							</select>
+							<div th:if="${#fields.hasErrors('usuario')}" th:errors="*{usuario}" class="text-danger small"></div>
+						</div>	
+						<div class="form-group row mt-3">
+						    <label class="col-form-label col-sm-4">¿Completada?</label>
+						    <div class="col-sm-8 text-start">
+						        <input type="checkbox" th:field="*{completada}" class="form-check-input">
+						        <label class="form-check-label ms-2">Marcar como completada</label>
+						    </div>
+						</div>				
+					</div>
+					<div class="text-center p">
+						<button type="submit" class="btn btn-primary">Guardar</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
